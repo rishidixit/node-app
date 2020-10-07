@@ -17,6 +17,26 @@ pipeline {
                  }
            }
          }
+         stage("Deploy to k8s") {
+             steps{
+                 sh "chmod +x changeTag.sh"
+                 sh "./changeTag.sh ${DOCKER_TAG}"
+                 sshagent(['Kops-Node']) {
+                 sh "scp -o StrictHostKeyChecking service.yml node-app-pod.yml ubuntu@3.236.107.31:/home/ubuntu/"
+                 script{
+                     try{
+                         sh "ssh ubuntu@3.236.107.31 kubectl apply -f ."
+                     }catch(error){
+                         sh "ssh ubuntu@3.236.107.31 kubectl create -f ."
+                     }
+
+                     }
+                 } 
+}
+
+
+             }
+         }
      }
 }
 
