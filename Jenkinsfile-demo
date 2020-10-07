@@ -28,14 +28,11 @@ pipeline {
                          sh "ssh ubuntu@3.236.107.31 kubectl apply -f ."
                      }catch(error){
                          sh "ssh ubuntu@3.236.107.31 kubectl create -f ."
-                     }
-
-                     }
-                 } 
-}
-
-
-             }
+                      }
+                    }
+                  } 
+                }
+            }
          }
      }
 }
