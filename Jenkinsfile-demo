@@ -9,7 +9,7 @@ pipeline {
                  sh "docker build . -t rishidixit/nodeapp:${DOCKER_TAG}"
              }
          }
-         stage {
+         stage("Docker HubPush") {
              steps{
                  withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerHubPwd')]) {
                   sh "docker login -u rishidixit -p ${dockerHubPwd}"
